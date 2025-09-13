@@ -29,8 +29,8 @@ export default class TriviaGame {
     shuffleArray(array) {
         return array
             .map(item => ({ value: item, sortFactor: Math.random() }))
-            .sort((a, b) => a.sortFactor - b.sortFactor)
-            .map(obj => obj.value);
+            .sort((a, b) => a.sortFactor - b.sortFactor) // use sortFactor added, to randomize questions
+            .map(obj => obj.value); // get back original values only (we no longer care about obj.sortValue)
     }
 
     /**
@@ -48,6 +48,9 @@ export default class TriviaGame {
      * and return when the game is expired.
      */
     startTimer() {
+        this.timer = setTimeout(() => {
+        this.timeUp = true;
+        }, this.minutes * 60 * 1000);
     }
 
     /**
@@ -55,6 +58,33 @@ export default class TriviaGame {
      * of the game flow.
      */
     async start() {
+        this.ui.showStart(this.minutes);
+        this.endTime = Date.now() + this.minutes * 60 * 1000;
+        this.startTimer();
+        while (!this.timeUp && this.currentIndex < this.questions.length) {
+            /* --- NOTE:--- 
+            // I attempted setInterval() first, but getting that to write
+            // caused buggy behavior, so I'm holding an estimate seperate
+            // that can be printed to the user at each question.*/
+            const remaining = Math.max(0, Math.ceil((this.endTime - Date.now()) / 1000)); //show remaining time independent from timer
+            this.ui.showRemainingTime(remaining);
+            const q = this.questions[this.currentIndex]; // get the question
+            this.ui.showQuestion(q, this.currentIndex); // display the question
+            const input = await this.askInput("\nAnswer [1,2,3,4]: "); // get answer from user
+
+            if (this.timeUp) break; // check if time is up before answer
+            const playerAnswer = parseInt(input) - 1;
+
+            // update points based on whether answer was correct and display result
+            if (playerAnswer === q.answer) {
+                this.score += q.points;
+                this.ui.showCorrect();
+            } else {
+                this.ui.showWrong(q.choices[q.answer]);
+            }
+            this.currentIndex++;
+        }
+        this.endGame(this.timeUp ? "Time has ran out!" : "You finished all the questions!"); // if there is still time, then currentIndex = questions.length
     }
 
     /**
@@ -62,5 +92,8 @@ export default class TriviaGame {
      * @param {string} message 
      */
     endGame(message) {
+        this.ui.showEnd(message, this.score);
+        this.rl.close();
+        process.exit(0);
     }
 }
