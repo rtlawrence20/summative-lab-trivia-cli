@@ -3,7 +3,13 @@
  * a TriviaGame.
  */
 export default class TriviaUI {
-  showStart(minutes) {
+    
+    /**
+     * Method to display start of game
+     * @param {number} minutes 
+     */
+    showStart(minutes) {
+    console.log(`\nYou have ${minutes} minute(s). Good luck!\n`);
   }
 
   /**
@@ -11,6 +17,7 @@ export default class TriviaUI {
    * @param {number} seconds 
    */
   showRemainingTime(seconds) {
+    console.log(`Time left: ${seconds} seconds`);
   }
 
   /**
@@ -20,6 +27,8 @@ export default class TriviaUI {
    * @param {*} index 
    */
   showQuestion(q, index) {
+    console.log(`\nQuestion ${index + 1}: \n${q.question}`);
+    q.choices.forEach((choice, choiceIndex) => console.log(`${choiceIndex + 1}. ${choice}`));
   }
 
   /**
@@ -27,6 +36,7 @@ export default class TriviaUI {
    * correct.
    */
   showCorrect() {
+    console.log('\x1b[32m%s\x1b[0m', 'Correct'); //print green
   }
 
   /**
@@ -35,6 +45,7 @@ export default class TriviaUI {
    * @param {string} correctAnswer 
    */
   showWrong(correctAnswer) {
+    console.log('\x1b[31m%s\x1b[0m', `Wrong\nThe correct answer: ${correctAnswer}`);
   }
 
   /**
@@ -43,5 +54,7 @@ export default class TriviaUI {
    * @param {number} score 
    */
   showEnd(message, score) {
+    console.log(`\n${message}`);
+    console.log(`Your Final Score:\n${score} points!`);
   }
 }
