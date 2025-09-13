@@ -84,7 +84,7 @@ export default class TriviaGame {
             }
             this.currentIndex++;
         }
-        this.endGame(this.timeUp ? "Time has ran out!" : "You finished all the questions!"); // if there is still time, then currentIndex = questions.length
+        this.endGame(this.timeUp ? "Time ran out!" : "You finished all the questions!"); // if there is still time, then currentIndex = questions.length
     }
 
     /**
@@ -93,6 +93,7 @@ export default class TriviaGame {
      */
     endGame(message) {
         this.ui.showEnd(message, this.score);
+        process.stdout.write('\x1B[?25h'); // Show cursor
         this.rl.close();
         process.exit(0);
     }
