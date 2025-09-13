@@ -27,6 +27,10 @@ export default class TriviaGame {
      * @param {array} questions 
      */
     shuffleArray(array) {
+        return array
+            .map(item => ({ value: item, sortFactor: Math.random() }))
+            .sort((a, b) => a.sortFactor - b.sortFactor)
+            .map(obj => obj.value);
     }
 
     /**
@@ -34,6 +38,9 @@ export default class TriviaGame {
      * @param {string} prompt 
      */
     askInput(prompt) {
+        return new Promise(resolve => {
+            this.rl.question(prompt, answer => resolve(answer.trim()));
+        });
     }
 
     /**
