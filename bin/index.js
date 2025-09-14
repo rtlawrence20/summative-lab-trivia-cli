@@ -9,7 +9,6 @@ const messagePrompt = "Choose amount of time you would like to have:\n\n"+
  * Run main program for triviaGame
  */
 async function main() {
-    //process.stdout.write('\x1Bc'); //clear screen
     const rl = readline.createInterface({
         input: process.stdin,
         output: process.stdout
