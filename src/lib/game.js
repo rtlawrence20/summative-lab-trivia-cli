@@ -14,12 +14,12 @@ export default class TriviaGame {
         this.score = 0;
         this.currentIndex = 0;
         this.rl = readline.createInterface({
-        input: process.stdin,
-        output: process.stdout
+            input: process.stdin,
+            output: process.stdout
         });
         this.timeUp = false;
     }
-  
+
     /**
      * Method to shuffle and return a random stack
      * of questions from the test bank for 
@@ -49,7 +49,7 @@ export default class TriviaGame {
      */
     startTimer() {
         this.timer = setTimeout(() => {
-        this.timeUp = true;
+            this.timeUp = true;
         }, this.minutes * 60 * 1000);
     }
 

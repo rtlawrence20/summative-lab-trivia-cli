@@ -8,8 +8,8 @@ export default class TriviaUI {
      * @param {number} minutes 
      */
     showStart(minutes) {
-    process.stdout.write('\x1Bc'); //clear screen
-    console.log(`\n\x1b[93m%s\x1b[0m`,`You have ${minutes} minute(s). Good luck!\n`);
+        process.stdout.write('\x1Bc'); //clear screen
+        console.log(`\n\x1b[93m%s\x1b[0m`, `You have ${minutes} minute(s). Good luck!\n`);
     }
 
     /**
@@ -27,7 +27,7 @@ export default class TriviaUI {
      * @param {*} index 
      */
     showQuestion(q, index) {
-        console.log(`\x1b[4m%s\x1b[0m`,`\nQuestion ${index + 1}:`)
+        console.log(`\x1b[4m%s\x1b[0m`, `\nQuestion ${index + 1}:`)
         console.log(`${q.question}`);
         q.choices.forEach((choice, choiceIndex) => console.log(`[${choiceIndex + 1}] : ${choice}`));
     }
@@ -58,6 +58,6 @@ export default class TriviaUI {
      */
     showEnd(message, score) {
         console.log(`\n${message}`);
-        console.log(`\x1b[1m%s\x1b[0m`,`Your Final Score:\n${score} points!`);
+        console.log(`\x1b[1m%s\x1b[0m`, `Your Final Score:\n${score} points!`);
     }
 }
